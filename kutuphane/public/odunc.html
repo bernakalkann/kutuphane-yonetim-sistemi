@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kitap Ödünç Alma</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 400px; margin: auto; }
+    input, button { width: 100%; padding: 10px; margin: 8px 0; box-sizing: border-box; }
+    button { background: #007bff; color: white; border: none; cursor: pointer; }
+    button:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+  <h1>Kitap Ödünç Alma</h1>
+  <form id="oduncForm">
+    <label>Kitap No:</label>
+    <input type="number" id="kitapno" required />
+
+    <label>Öğrenci No:</label>
+    <input type="number" id="ogrno" required />
+
+    <label>Alış Tarihi:</label>
+    <input type="date" id="atarih" required />
+
+    <button type="submit">Ödünç Al</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('oduncForm');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const data = {
+        kitapno: Number(document.getElementById('kitapno').value),
+        ogrno: Number(document.getElementById('ogrno').value),
+        atarih: document.getElementById('atarih').value
+      };
+
+      fetch('/odunc-al', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.text())
+      .then(msg => {
+        alert(msg);
+        form.reset();
+      })
+      .catch(err => alert('Hata: ' + err));
+    });
+  </script>
+</body>
+</html>

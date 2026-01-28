@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>İşlem Listesi</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background-color: #4CAF50; color: white; }
+  </style>
+</head>
+<body>
+  <h1>İşlem Listesi</h1>
+  <table id="islemTablosu">
+    <thead>
+      <tr>
+        <th>İşlem No</th>
+        <th>Kitap Adı</th>
+        <th>Öğrenci Adı</th>
+        <th>Alış Tarihi</th>
+        <th>İade Tarihi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- İşlemler buraya yüklenecek -->
+    </tbody>
+  </table>
+
+  <script>
+    fetch('/islemler')
+      .then(response => response.json())
+      .then(data => {
+        const tbody = document.querySelector('#islemTablosu tbody');
+        data.forEach(item => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${item.islemno}</td>
+            <td>${item.kitapadi}</td>
+            <td>${item.ograd}</td>
+            <td>${item.atarih ? new Date(item.atarih).toLocaleDateString() : ''}</td>
+            <td>${item.vtarih ? new Date(item.vtarih).toLocaleDateString() : ''}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(err => alert('İşlem listesi yüklenirken hata: ' + err));
+  </script>
+</body>
+</html>

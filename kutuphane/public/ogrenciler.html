@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Öğrenci Listesi</title>
+</head>
+<body>
+  <h1>📋 Öğrenci Listesi</h1>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Öğrenci No</th>
+        <th>Ad</th>
+        <th>Soyad</th>
+        <th>Cinsiyet</th>
+        <th>Sınıf</th>
+        <th>Doğum Tarihi</th>
+        <th>Puan</th>
+      </tr>
+    </thead>
+    <tbody id="ogrenciListesi">
+      <!-- Öğrenciler buraya eklenecek -->
+    </tbody>
+  </table>
+
+  <script>
+    fetch('/ogrenciler')
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById('ogrenciListesi');
+        data.forEach(ogr => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${ogr.ogrno}</td>
+            <td>${ogr.ograd}</td>
+            <td>${ogr.ogrsoyad}</td>
+            <td>${ogr.cinsiyet}</td>
+            <td>${ogr.sinif}</td>
+            <td>${ogr.dtarih}</td>
+            <td>${ogr.puan}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(err => console.error('Veri alınamadı:', err));
+  </script>
+</body>
+</html>

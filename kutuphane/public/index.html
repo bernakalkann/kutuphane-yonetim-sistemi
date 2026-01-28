@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kitap ve Ödünç Alma İşlemleri</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; max-width: 500px; margin: auto; }
+    form { background: #fff; padding: 20px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 0 8px #ccc; }
+    input, button { width: 100%; padding: 10px; margin: 8px 0; box-sizing: border-box; }
+    button { background-color: #28a745; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #218838; }
+    h1, h2 { text-align: center; }
+  </style>
+</head>
+<body>
+
+  <h1>Yeni Kitap Ekle</h1>
+  <form id="kitapForm">
+    <label>Kitap Adı:</label>
+    <input type="text" id="kitapadi" required />
+
+    <label>Sayfa Sayısı:</label>
+    <input type="number" id="sayfasayisi" required />
+
+    <label>ISBN No:</label>
+    <input type="number" id="isbnno" required />
+
+    <label>Puan:</label>
+    <input type="number" id="puan" required />
+
+    <label>Tür No:</label>
+    <input type="number" id="turno" required />
+
+    <label>Yazar No:</label>
+    <input type="number" id="yazarno" required />
+
+    <button type="submit">Kitap Ekle</button>
+  </form>
+
+  <h2>Ödünç Alma İşlemi Ekle</h2>
+  <form id="islemForm">
+    <label>Kitap No (kitapno):</label>
+    <input type="number" id="kitapno" required />
+
+    <label>Öğrenci No (ogrno):</label>
+    <input type="number" id="ogrno" required />
+
+    <label>Alış Tarihi (YYYY-MM-DD):</label>
+    <input type="date" id="atarih" required />
+
+    <label>Veriş Tarihi (YYYY-MM-DD):</label>
+    <input type="date" id="vtarih" required />
+
+    <button type="submit">Ödünç Alma Kaydet</button>
+  </form>
+  <button onclick="window.location.href='/kitaplar'">Kitapları Görüntüle</button>
+  <button onclick="window.location.href='islemler.html'" 
+        style="padding: 10px 20px; font-size: 16px; cursor: pointer; margin-top: 20px;">
+  İşlem Listesini Görüntüle
+</button>
+ <button onclick="location.href='ogrenci.html'">👤 Öğrenci Ekle</button>
+<button onclick="location.href='ogrenciler.html'">📚 Öğrencileri Görüntüle</button>
+
+
+
+
+  <script>
+    // Kitap ekleme
+    const kitapForm = document.getElementById('kitapForm');
+    kitapForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const data = {
+        kitapadi: document.getElementById('kitapadi').value,
+        sayfasayisi: Number(document.getElementById('sayfasayisi').value),
+        isbnno: Number(document.getElementById('isbnno').value),
+        puan: Number(document.getElementById('puan').value),
+        turno: Number(document.getElementById('turno').value),
+        yazarno: Number(document.getElementById('yazarno').value)
+      };
+
+      fetch('/kitap-ekle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.text())
+      .then(msg => {
+        alert(msg);
+        kitapForm.reset();
+      })
+      .catch(err => alert('Hata: ' + err));
+    });
+
+    // Ödünç alma işlemi ekleme
+    const islemForm = document.getElementById('islemForm');
+    islemForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const data = {
+        kitapno: Number(document.getElementById('kitapno').value),
+        ogrno: Number(document.getElementById('ogrno').value),
+        atarih: document.getElementById('atarih').value,
+        vtarih: document.getElementById('vtarih').value
+      };
+
+      fetch('/islem-ekle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.text())
+      .then(msg => {
+        alert(msg);
+        islemForm.reset();
+      })
+      .catch(err => alert('Hata: ' + err));
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Öğrenci Ekle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Öğrenci Ekle</h2>
+    <form id="ogrenciForm">
+      <input type="number" name="ogrno" placeholder="Öğrenci No" required>
+      <input type="text" name="ograd" placeholder="Ad" required>
+      <input type="text" name="ogrsoyad" placeholder="Soyad" required>
+      <input type="text" name="cinsiyet" placeholder="Cinsiyet" required>
+      <input type="number" name="sinif" placeholder="Sınıf" required>
+      <input type="date" name="dtarih" required>
+      <input type="number" name="puan" placeholder="Puan" required>
+      <button type="submit">Ekle</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('ogrenciForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      const response = await fetch('/ogrenci-ekle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.text();
+      alert(result);
+    });
+  </script>
+</body>
+</html>
