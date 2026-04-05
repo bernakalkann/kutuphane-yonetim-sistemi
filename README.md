@@ -4,6 +4,9 @@ AI Book Haven, kitap yönetimi ve yeni nesil kütüphane işlemleri için geliş
 
 ## Öne Çıkan Özellikler
 
+![Sistem Ekran Görüntüsü](./screenshot.png)
+> ⚠️ **Not:** Proje arayüzü (Frontend) geliştirme aşamasındadır (Work in Progress). Yukarıdaki görsel, projenin hedeflenen bitmiş arayüzünü temsil eden bir mock-up (tasarım taslağı) karesidir.
+
 - **Yapay Zeka (AI) Entegrasyonu:** Google Generative AI (Gemini) kullanılarak kitap verileri üzerinde akıllı analiz ve öneri sistemi.
 - **Bulut Depolama:** AWS S3 entegrasyonu ile kitap kapakları ve dosyaların buluta (Presigned URL) güvenli yüklenmesi.
 - **Güvenli Mimari:** JWT (JSON Web Token) ile kullanıcı yetkilendirmesi, `bcrypt` ile şifreleme ve `Helmet` & `express-rate-limit` ile API güvenliği.
